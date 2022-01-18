@@ -1,0 +1,19 @@
+[2022-01-18T22:06:58.526] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:25:43.379] [INFO] default - sql query show databases []
+[2022-01-18T23:25:43.383] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:34:37.661] [INFO] default - sql query show databases []
+[2022-01-18T23:34:37.670] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:36:58.588] [INFO] default - sql query show databases []
+[2022-01-18T23:36:58.592] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:40:34.812] [INFO] default - sql query show databases []
+[2022-01-18T23:40:34.815] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:41:24.074] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:43:55.453] [INFO] default - listen on port 3000;
+ click http://localhost:3000 to visit server;
+[2022-01-18T23:43:58.025] [INFO] default - sql query show databases []
