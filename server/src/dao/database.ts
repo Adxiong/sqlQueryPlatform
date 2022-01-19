@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-19 23:18:44
+ * @LastEditTime: 2022-01-20 00:07:27
  */
 
 
@@ -27,6 +27,11 @@ class DatabaseDao {
  async createDatabase (name: string): Promise<void> {
   const sql = 'create database ?;'
   await pool.query(sql, [name])
+ }
+
+ async useDatabase (name: string): Promise<void> {
+   const sql = 'use ?'
+   await pool.query(sql, [name])
  }
 }
 

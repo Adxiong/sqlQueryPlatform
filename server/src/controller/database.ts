@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-19 23:43:33
+ * @LastEditTime: 2022-01-20 00:05:52
  */
 
 import { Router, Response, Request, NextFunction } from 'express';
@@ -22,15 +22,28 @@ router.get("/list", (req: Request, res: Response, next: NextFunction) => {
 }) 
 
 
-router.get('/createDatabase', (req: Request, res: Response, next: NextFunction) => {
+router.post('/createDatabase', (req: Request, res: Response, next: NextFunction) => {
   if (!req.body.name) {
     res.json(new ApiResult(ResponseStatus.fail, null, '数据不完整'))
     return
   }
   DatabaseService.createDatabase(req.body.name)
   .then( () => {
-    res.json(new ApiResult(ResponseStatus.success, null, null))
+    res.json(new ApiResult(ResponseStatus.success))
   })
   .catch(next)
 })
+
+router.post('/useDatabase', (req: Request, res: Response, next: NextFunction) => {
+  if (!req.body.name) {
+    res.json(new ApiResult(ResponseStatus.fail, '数据不完整'))
+    return
+  }
+  DatabaseService.useDatabase(req.body.name)
+  .then( () => {
+    res.json(new ApiResult(ResponseStatus.success))
+  })
+  .catch(next)
+})
+
 export default router
