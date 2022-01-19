@@ -1,10 +1,10 @@
 /*
- * @Descripttion: 
+ * @Description: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-18 21:31:44
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-18 22:02:57
+ * @LastEditTime: 2022-01-19 00:01:27
  */
 import * as log4js from 'log4js';
 import * as path from 'path';
