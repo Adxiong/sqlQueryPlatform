@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-19 10:16:00
+ * @LastEditTime: 2022-01-19 23:18:44
  */
 
 
@@ -24,10 +24,9 @@ class DatabaseDao {
   return result
  }
 
- async createDatabase (): Promise<boolean> {
+ async createDatabase (name: string): Promise<void> {
   const sql = 'create database ?;'
-  const result = await pool.query(sql, [])
-  return result
+  await pool.query(sql, [name])
  }
 }
 

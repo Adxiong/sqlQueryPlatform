@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-19 10:14:12
+ * @LastEditTime: 2022-01-19 23:19:42
  */
 
 import { Router, Response, Request, NextFunction } from 'express';
@@ -22,7 +22,11 @@ router.get("/list", (req: Request, res: Response, next: NextFunction) => {
 
 
 router.get('/createDatabase', (req: Request, res: Response, next: NextFunction) => {
-  DatabaseService.createDatabase()
+  if (!req.body.name) {
+    res.json()
+    return
+  }
+  DatabaseService.createDatabase(req.body.name)
   .then( () => {
     res.json()
   })

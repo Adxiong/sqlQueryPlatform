@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:07
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-19 10:16:58
+ * @LastEditTime: 2022-01-19 23:19:05
  */
 
 import DatabaseDao from "../dao/database";
@@ -15,9 +15,8 @@ class DatabaseService {
   return databases
  }
 
- async createDatabase(): Promise<boolean> {
-   const result = await DatabaseDao.createDatabase()
-   return result
+ async createDatabase(name: string): Promise<void> {
+   DatabaseDao.createDatabase(name)
  }
 
 }
