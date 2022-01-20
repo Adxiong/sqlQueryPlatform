@@ -4,24 +4,29 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 20:22:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-20 22:02:46
+ * @LastEditTime: 2022-01-21 00:33:49
  */
 
 import { FC, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import ProLayout from '@ant-design/pro-layout';
+import { Button, Empty, Result } from "antd";
 interface Props {
 
 }
+
+
+
+
 const defaultProps = {
   routes: [
     {
       path: '/',
-      name: '主面板'
+      name: '数据中心'
     },
     {
-      path: '/login',
-      name: '用户中心'
+      path: '/setting',
+      name: '设置'
     }
   ]
 }
@@ -49,6 +54,7 @@ const BaseLayout: FC<Props> = (props) => {
       >
         <Outlet/>
       </ProLayout>
+      {location.pathname === '/' ? <Navigate replace to='/home' /> : null}
     </div>
   )
 }
