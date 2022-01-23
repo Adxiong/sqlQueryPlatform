@@ -1,21 +1,20 @@
-import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 /*
  * @Descripttion: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-16 18:28:50
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-21 00:33:56
+ * @LastEditTime: 2022-01-24 01:27:15
  */
 
 
-
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { lazy, FC, Suspense } from "react"
-import { RouteObject  } from 'react-router-dom'
-import { Link } from 'react-router-dom';
-import  BaseLayout from "../layout/baseLayout"
+import  BaseLayout from "../layout/BaseLayout";
+import SecurityLayout from '../layout/SecurityLayout';
 import Home from '../pages/home/home'
 import Setting from '../pages/setting/setting'
+import Details from '../pages/home/details';
 import { Button, Result } from 'antd';
 
 export interface RoutesType  {
@@ -41,15 +40,25 @@ const NotFound: FC = () => {
 export const routes: RoutesType[]= [
   {
     path: '/',
-    element: (
-      <Suspense fallback={<>数据加载中。。。</>}>
-        <BaseLayout/>
-      </Suspense>
-    ),
+    element: <SecurityLayout/>,
     children: [
       {
         path: '/home',
-        element: <Home/>
+        element: <BaseLayout/>,
+        children: [
+          {
+            path: '/home',
+            element: <Navigate replace to="/home/list"/>
+          },
+          {
+            path: '/home/list',
+            element: <Home/>
+          },
+          {
+            path: '/home/details',
+            element: <Details />
+          }
+        ],
       },
       {
         path: "/setting",

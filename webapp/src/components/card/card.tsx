@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-21 13:39:30
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-23 20:56:25
+ * @LastEditTime: 2022-01-24 00:39:53
  */
 import { FC } from "react";
 import styles from "../card/card.module.less"
@@ -17,7 +17,10 @@ export interface CardDataType {
 }
 
 interface Props {
-  data: CardDataType[]
+  data: CardDataType[] ;
+  clickDelete: (id: number) => void;
+  clickSetting: (id: number) => void ;
+  clickData: (id: number) => void;
 }
 
 interface logoMapType {
@@ -41,14 +44,14 @@ const Card: FC<Props> = (props) => {
               <div className={styles.content}>
                 <span className={styles.title}>{item.title}</span>
                 <div className={styles.tools}>
-                  <div>
+                  <div onClick={() => props.clickSetting(index)}>
                     <SettingTwoTone/>
                   </div>
-                  <div>
-                    <FundTwoTone />
+                  <div onClick={ () => props.clickData(index)}>
+                    <FundTwoTone/>
                   </div>
-                  <div>
-                    <DeleteTwoTone />
+                  <div onClick={() => props.clickDelete(index)}>
+                    <DeleteTwoTone/>
                   </div>
                 </div>
               </div>
