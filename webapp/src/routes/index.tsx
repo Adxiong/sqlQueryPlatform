@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:28:50
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 17:51:49
+ * @LastEditTime: 2022-01-25 00:58:15
  */
 
 
@@ -53,8 +53,7 @@ export const routes: RoutesType[]= [
       {
         path: '/home/details',
         element: <Details />
-      } 
-      ,
+      },
       {
         path: "/setting",
         element: <Setting/>,

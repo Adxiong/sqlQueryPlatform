@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 17:47:01
+ * @LastEditTime: 2022-01-25 01:10:57
  */
 
 import { Button, Form, Input, Modal } from "antd";
@@ -65,8 +65,9 @@ const CreateDatabase: FC<Props> = (props) => {
     <div id={styles.AddDatabasePanel}>
       <Modal 
         title="创建连接" 
-        centered 
+        centered
         visible={true}
+        onCancel={clickCancel}
         footer={
           <div>
             <Button onClick={onTestConnect} type="primary">测试连接</Button>
