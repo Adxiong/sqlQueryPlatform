@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:28:50
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 01:27:15
+ * @LastEditTime: 2022-01-24 17:51:49
  */
 
 
@@ -40,26 +40,21 @@ const NotFound: FC = () => {
 export const routes: RoutesType[]= [
   {
     path: '/',
-    element: <SecurityLayout/>,
+    element: <BaseLayout/>,
     children: [
       {
         path: '/home',
-        element: <BaseLayout/>,
-        children: [
-          {
-            path: '/home',
-            element: <Navigate replace to="/home/list"/>
-          },
-          {
-            path: '/home/list',
-            element: <Home/>
-          },
-          {
-            path: '/home/details',
-            element: <Details />
-          }
-        ],
+        element: <Navigate replace to="/home/list"/>
       },
+      {
+        path: '/home/list',
+        element: <Home/>
+      },
+      {
+        path: '/home/details',
+        element: <Details />
+      } 
+      ,
       {
         path: "/setting",
         element: <Setting/>,

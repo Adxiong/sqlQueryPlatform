@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 13:29:40
+ * @LastEditTime: 2022-01-24 17:50:09
  */
 import React, { useState } from "react";
 import Card from "../../components/card/card"
@@ -19,7 +19,7 @@ interface Props {
 const Home: React.FC<Props> = (props) => {
   const navigate = useNavigate()
   const [showCreateDatabase, setShowCreateDatabase] = useState<boolean>(false)
-  const [data, setData] = useState<any[]>(new Array(12).fill({
+  const [data, setData] = useState<any[]>(new Array(8).fill({
     title: "mysql",
     desc: '数据库'
   }))
@@ -35,10 +35,6 @@ const Home: React.FC<Props> = (props) => {
   }
   const onToggleCreateStatus = (status: boolean) => {
     setShowCreateDatabase(status)
-  }
-
-  const onCancelCreate = () => {
-    setShowCreateDatabase(false)
   }
 
   return (

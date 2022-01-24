@@ -4,16 +4,15 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 16:36:34
+ * @LastEditTime: 2022-01-24 17:40:07
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
 import { Tabs, Tree } from "antd";
 import { FC, useEffect, useState } from "react";
-import { useHref, useLocation, useMatch, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import styles from "./style/details.module.less"
 import TablePanel from "./tablePanel";
-
 interface Props {
 
 }
