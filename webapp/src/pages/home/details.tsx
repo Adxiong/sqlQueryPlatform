@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-25 17:14:34
+ * @LastEditTime: 2022-01-26 01:07:33
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
@@ -34,7 +34,7 @@ const Details: FC = (props) => {
         {
           title: 'leaf',
           key: '0-0-1',
-          icon: ({ selected }) => (selected ? <FrownFilled /> : <FrownOutlined />),
+          icon: ({ selected }:{selected: any}) => (selected ? <FrownFilled /> : <FrownOutlined />),
         },
       ],
     },
