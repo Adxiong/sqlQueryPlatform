@@ -4,14 +4,15 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 17:50:09
+ * @LastEditTime: 2022-01-27 01:51:05
  */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
 import styles from "./style/home.module.less"
 import { Button, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import CreateDatabase from "./createDatabase";
+import services from "../../services/home"
 interface Props {
 
 }
@@ -23,6 +24,20 @@ const Home: React.FC<Props> = (props) => {
     title: "mysql",
     desc: '数据库'
   }))
+
+  useEffect(() => {
+    services.queryDatabaselist()
+    .then( res => {
+      console.log(res);
+      
+    }).catch( err => {
+      console.log(err);
+      
+    })
+    return () => {
+      
+    }
+  }, [])
 
   const onClickSetting = (id: number) => {
   }

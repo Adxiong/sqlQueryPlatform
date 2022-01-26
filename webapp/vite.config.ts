@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-12 17:25:04
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-20 01:09:00
+ * @LastEditTime: 2022-01-27 01:48:09
  */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -14,9 +14,17 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  
   server: {
     port: 8000,
-    open: false
+    open: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: path => path.replace('^', '')
+      }
+    }
   },
   plugins: [react()],
   css: {
