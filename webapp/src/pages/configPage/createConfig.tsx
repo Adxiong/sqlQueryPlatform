@@ -4,14 +4,14 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:28:53
+ * @LastEditTime: 2022-01-28 23:32:59
  */
 
 import { Button, Form, Input, Modal, Select } from "antd";
 import { FormInstance, useForm } from "antd/lib/form/Form";
 import React, { createRef, FC, RefObject, useRef, useState } from "react";
 import styles from "./style/createDatabase.module.less"
-import { CreateDatabaseParams, DatabaseInstance } from "../../models/reducer/home"
+import { CreateConfigParams } from "../../models/reducer/config"
 import ConfigServices from "../../services/config"
 import { useDispatch } from "react-redux";
 import { log } from "console";
@@ -21,11 +21,11 @@ interface Props {
 
 
 
-const CreateDatabase: FC<Props> = (props) => {
+const CreateConfig: FC<Props> = (props) => {
   const { clickCancel } = props
   const formRef:React.RefObject<FormInstance> = createRef<FormInstance>()
   const dispatch = useDispatch()
-  const initialValues: CreateDatabaseParams = {
+  const initialValues: CreateConfigParams = {
     name: "",
     type: "mysql",
     host: "localhost",
@@ -34,7 +34,7 @@ const CreateDatabase: FC<Props> = (props) => {
     password: ''
   }
 
-  const [form, setForm] = useState<CreateDatabaseParams>(initialValues)
+  const [form, setForm] = useState<CreateConfigParams>(initialValues)
   const onSubmit = () => {
     formRef.current?.validateFields()
     .then( (form)=> {
@@ -157,4 +157,4 @@ const CreateDatabase: FC<Props> = (props) => {
   )
 }
 
-export default CreateDatabase
+export default CreateConfig

@@ -4,9 +4,9 @@
  * @Author: Adxiong
  * @Date: 2022-01-26 20:27:22
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 22:38:00
+ * @LastEditTime: 2022-01-28 23:32:20
  */
-export interface DatabaseInstance {
+export interface ConfigInstance {
   id: string;
   type: string;
   name: string;
@@ -16,7 +16,7 @@ export interface DatabaseInstance {
   password: string;
 }
 
-export interface CreateDatabaseParams {
+export interface CreateConfigParams {
   type: string;
   name: string;
   host: string;
@@ -25,23 +25,19 @@ export interface CreateDatabaseParams {
   password: string;
 }
 
-export interface TableInstance {
-  id: string;
-  name: string;
-}
-export interface HomeSateType {
-  databaseList: DatabaseInstance[]
+export interface ConfigStateType {
+  databaseList: ConfigInstance[]
 }
 interface Actios {
   type: string,
   payload: any,
 }
 
-const HomeState: HomeSateType= {
+const ConfigState: ConfigStateType= {
   databaseList: []
 }
 
-export default (state=HomeState, actions: Actios) => {  
+export default (state=ConfigState, actions: Actios) => {  
   switch(actions.type) {
     case "setDatabaseList":
       return {

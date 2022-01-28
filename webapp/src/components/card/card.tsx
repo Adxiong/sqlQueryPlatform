@@ -4,17 +4,17 @@
  * @Author: Adxiong
  * @Date: 2022-01-21 13:39:30
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 17:40:24
+ * @LastEditTime: 2022-01-28 23:36:10
  */
 import { FC } from "react";
 import styles from "../card/card.module.less"
 import mysqlPng from "../../assets/img/mysql.png"
 import { SettingTwoTone, FundTwoTone, DeleteTwoTone} from '@ant-design/icons';
-import { DatabaseInstance } from "../../models/reducer/home";
+import { ConfigInstance } from "../../models/reducer/config";
 
 
 interface Props {
-  data: DatabaseInstance[] ;
+  data: ConfigInstance[] ;
   clickDelete: (id: string) => void;
   clickSetting: (id: string) => void ;
   clickData: (id: string) => void;
@@ -34,7 +34,7 @@ const Card: FC<Props> = (props) => {
   return (
     <div id={styles.Card}>
       {
-        data.map( (item: DatabaseInstance) => {
+        data.map( (item: ConfigInstance) => {
           return (   
             <div className={styles.cardItem} key={item.id}>
               <img src={logoMap[item.type]} alt={item.name} />

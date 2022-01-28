@@ -4,13 +4,12 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 20:22:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 17:32:12
+ * @LastEditTime: 2022-01-28 23:37:15
  */
 
 import { FC, useState } from "react";
 import { Link, Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import ProLayout from '@ant-design/pro-layout';
-import { Button, Empty, Result } from "antd";
 import RouteBack from "../components/routeBack/routeBack";
 interface Props {
 

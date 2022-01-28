@@ -4,17 +4,16 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:28:50
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-25 00:58:15
+ * @LastEditTime: 2022-01-28 23:39:36
  */
 
 
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { lazy, FC, Suspense } from "react"
 import  BaseLayout from "../layout/BaseLayout";
-import SecurityLayout from '../layout/SecurityLayout';
-import Home from '../pages/home/home'
+import Home from '../pages/configPage/home'
 import Setting from '../pages/setting/setting'
-import Details from '../pages/home/details';
+import Details from '../pages/databasePage/details';
 import { Button, Result } from 'antd';
 
 export interface RoutesType  {

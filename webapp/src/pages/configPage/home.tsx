@@ -4,16 +4,16 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:28:28
+ * @LastEditTime: 2022-01-28 23:35:21
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
 import styles from "./style/home.module.less"
 import { Button, Input, message, Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import CreateDatabase from "./createDatabase";
+import CreateDatabase from "./createConfig";
 import ConfigServices from "../../services/config"
-import { DatabaseInstance } from "../../models/reducer/home";
+import { ConfigInstance } from "../../models/reducer/config";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStore } from "../../models/reducer";
 interface Props {
@@ -24,9 +24,9 @@ const Home: React.FC<Props> = (props) => {
   const navigate = useNavigate()
   const [showCreateDatabase, setShowCreateDatabase] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const Homestore = useSelector((state: defaultStore) => state.HomeStore)
+  const Homestore = useSelector((state: defaultStore) => state.configStore)
   useEffect(() => {    
-    ConfigServices.query((res: DatabaseInstance[]) => {      
+    ConfigServices.query((res: ConfigInstance[]) => {      
       // setData(res)      
       dispatch({
         type: "setDatabaseList",
