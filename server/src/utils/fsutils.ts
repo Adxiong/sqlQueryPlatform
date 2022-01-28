@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-27 20:56:55
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-27 21:44:22
+ * @LastEditTime: 2022-01-28 19:43:49
  */
 
 import { readFile, writeFile } from 'fs'
@@ -23,13 +23,13 @@ class FsUtil {
     })
   }
 
-  async WriteFile (path: string, content: string): Promise<boolean> {
+  async WriteFile (path: string, content: string): Promise<void> {
     return new Promise( (resolve, reject) => {
-      writeFile(path, content, (err,) => {
-        if( err) {
+      writeFile(path, content, (err) => {
+        if( err) {          
           reject(err) 
-        } else {
-          resolve(true)
+        }else {
+          resolve()
         }
       })
     })

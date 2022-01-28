@@ -1,21 +1,23 @@
+import { CreateDatabaseParams, DatabaseInstance } from './../types/database';
 /*
  * @Description: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-27 01:54:31
+ * @LastEditTime: 2022-01-28 20:31:39
  */
 
 import { Router, Response, Request, NextFunction } from 'express';
 import DatabaseService from "../service/database";
 import { ApiResult, ResponseStatus} from '../utils/apiResult';
+import logger from '../utils/logger';
 
 const router =  Router()
 
 router.get("/list", (req: Request, res: Response, next: NextFunction) => {
-  DatabaseService.queryDatabases()
-  .then( data => {
+  DatabaseService.queryDatabaseList()
+  .then( (data: DatabaseInstance[]) => {
     res.json(new ApiResult(ResponseStatus.success, data))
   })
   .catch(next)
@@ -23,13 +25,23 @@ router.get("/list", (req: Request, res: Response, next: NextFunction) => {
 
 
 router.post('/createDatabase', (req: Request, res: Response, next: NextFunction) => {
-  if (!req.body.name) {
-    res.json(new ApiResult(ResponseStatus.fail, null, '数据不完整'))
+  DatabaseService.createDatabase(req.body.data as CreateDatabaseParams)
+  .then( (data: DatabaseInstance) => {
+    res.json(new ApiResult(ResponseStatus.success, data,"创建成功"))
+  })
+  .catch(next)
+})
+
+router.delete('/deleteDatabase', (req: Request, res: Response, next: NextFunction) => {  
+  if(!req.query.id){
+    res.json(new ApiResult(ResponseStatus.fail,"","id为空！"))
     return
   }
-  DatabaseService.createDatabase(req.body.name)
+  DatabaseService.deleteDatabase(req.query.id as string)
   .then( () => {
-    res.json(new ApiResult(ResponseStatus.success))
+    console.log(1);
+        
+    res.json(new ApiResult(ResponseStatus.success,"","删除成功"))    
   })
   .catch(next)
 })

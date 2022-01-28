@@ -1,26 +1,32 @@
+import { CreateDatabaseParams, DatabaseInstance } from './../types/database';
 /*
  * @Descripttion: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:07
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-20 00:07:32
+ * @LastEditTime: 2022-01-28 20:31:25
  */
 
 import DatabaseDao from "../dao/database";
 
 class DatabaseService {
-  async queryDatabases(): Promise<object> {
-    const databases = await DatabaseDao.queryDatabases()
-    return databases
+  async queryDatabaseList(): Promise<DatabaseInstance[]> {
+    return await DatabaseDao.queryDatabaseList()
+    
   }
 
-  async createDatabase(name: string): Promise<void> {
-    DatabaseDao.createDatabase(name)
+  async createDatabase(data: CreateDatabaseParams): Promise<DatabaseInstance> {
+    return await DatabaseDao.createDatabase(data)
+    
   }
   
   async useDatabase(name: string): Promise<void> {
-    DatabaseDao.useDatabase(name)
+    await DatabaseDao.useDatabase(name)
+  }
+  
+  async deleteDatabase(id: string): Promise<void> {
+    await DatabaseDao.deleteDatabase(id)
   }
 }
 

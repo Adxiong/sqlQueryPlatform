@@ -4,10 +4,12 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 14:12:12
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-18 23:18:46
+ * @LastEditTime: 2022-01-27 22:46:27
  */
 
+import * as path from 'path'
 interface Config {
+  databaseFilePath: string
   port: number,
   database: {
     host: string,
@@ -18,6 +20,7 @@ interface Config {
 }
 
 const config: Config = {
+  databaseFilePath: path.resolve(__dirname, '../file/databaseList.json'),
   port: 3000,
   database: {
     host: '127.0.0.1',
