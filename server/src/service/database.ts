@@ -1,32 +1,32 @@
-import { CreateDatabaseParams, DatabaseInstance } from './../types/database';
+import { DatabaseInstance, ConfigInstance, CreateConfigParams } from './../types/database';
 /*
  * @Descripttion: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:07
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 20:31:25
+ * @LastEditTime: 2022-01-28 23:18:11
  */
 
 import DatabaseDao from "../dao/database";
 
 class DatabaseService {
-  async queryDatabaseList(): Promise<DatabaseInstance[]> {
-    return await DatabaseDao.queryDatabaseList()
+  async queryConfigList(): Promise<ConfigInstance[]> {
+    return await DatabaseDao.queryConfigList()
     
   }
 
-  async createDatabase(data: CreateDatabaseParams): Promise<DatabaseInstance> {
-    return await DatabaseDao.createDatabase(data)
+  async createConfig(data: CreateConfigParams): Promise<ConfigInstance> {
+    return await DatabaseDao.createConfig(data)
     
   }
-  
-  async useDatabase(name: string): Promise<void> {
-    await DatabaseDao.useDatabase(name)
+
+  async deleteConfig(id: string): Promise<void> {
+    await DatabaseDao.deleteConfig(id)
   }
-  
-  async deleteDatabase(id: string): Promise<void> {
-    await DatabaseDao.deleteDatabase(id)
+
+  async databaseList(id: string): Promise<DatabaseInstance[]>{
+    return await DatabaseDao.databaseList(id)
   }
 }
 

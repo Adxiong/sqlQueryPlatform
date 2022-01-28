@@ -1,1 +1,9 @@
-[]
+[{
+    "id": "0ddbb3d6-81ce-48ad-80ed-dbe65c7a1699",
+    "type": "mysql",
+    "name": "mac",
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "123456"
+}]

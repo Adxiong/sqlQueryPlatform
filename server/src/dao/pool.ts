@@ -4,16 +4,18 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:16:47
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-18 23:23:53
+ * @LastEditTime: 2022-01-28 23:12:19
  */
 import * as mysql from "mysql";
-import config from "../config";
 import logger from "../utils/logger";
 import util from "../utils/util";
 
-const pool: mysql.Pool = mysql.createPool({
-  ...config.database
-})
+export interface ConfigType {
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+}
 
 function formatRes <T>(sql: string, res: any): T[] {
   if (/^(\s*select)/i.test(sql)) {
@@ -28,10 +30,14 @@ function formatRes <T>(sql: string, res: any): T[] {
 }
 
 class PoolUtil {
-  query<T> (sql: string, params?: any[]): Promise<T[]> {
+  pool: any;
+  constructor(config: ConfigType) {
+    this.pool = mysql.createPool(config)
+  }
+  query<T> (sql: string, params?: any[]): Promise<T[]> {   
     logger.info('sql query', sql, params)
     return new Promise((resolve, reject) => {
-      pool.query(sql, params, (err, result) => {
+      this.pool.query(sql, params, (err, result) => {
         if (err) {
           logger.error('执行sql错误', err.sql)
           reject(err)
@@ -44,7 +50,7 @@ class PoolUtil {
   write (sql: string, params?: any[]): Promise<mysql.OkPacket> {
     logger.info('sql insert: ', sql, params)
     return new Promise((resolve, reject) => {
-      pool.query(sql, params, (err, result) => {
+      this.pool.query(sql, params, (err, result) => {
         if (err) {
           logger.error('执行insert语句错误', err.sql)
           reject(err)
@@ -56,7 +62,7 @@ class PoolUtil {
   }
   beginTransaction (): Promise<mysql.PoolConnection> {
     return new Promise((resolve, reject) => {
-      pool.getConnection((err, connection: mysql.PoolConnection) => {
+      this.pool.getConnection((err, connection: mysql.PoolConnection) => {
         if (err) {
           logger.error('获取数据库连接失败', err)
           reject(err)
@@ -118,4 +124,4 @@ class PoolUtil {
     })
   }
 }
-export default new PoolUtil()
+export default PoolUtil
