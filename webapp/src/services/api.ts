@@ -4,13 +4,16 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 14:37:59
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 17:39:23
+ * @LastEditTime: 2022-01-28 23:24:51
  */
 
 export default {
-  home: {
-    queryDatabases: '/api/database/list',
-    createDatabase: '/api/database/createDatabase',
-    deleteDatabase: '/api/database/deleteDatabase'
+  config: {
+    query: '/api/config/list',
+    createConfig: '/api/config/createConfig',
+    deleteConfig: '/api/config/deleteConfig',
+  },
+  database: {
+    query: '/api/database/list'
   }
 }

@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 20:32:16
+ * @LastEditTime: 2022-01-28 23:28:53
  */
 
 import { Button, Form, Input, Modal, Select } from "antd";
@@ -12,7 +12,7 @@ import { FormInstance, useForm } from "antd/lib/form/Form";
 import React, { createRef, FC, RefObject, useRef, useState } from "react";
 import styles from "./style/createDatabase.module.less"
 import { CreateDatabaseParams, DatabaseInstance } from "../../models/reducer/home"
-import HomeService from "../../services/home"
+import ConfigServices from "../../services/config"
 import { useDispatch } from "react-redux";
 import { log } from "console";
 interface Props {
@@ -38,7 +38,7 @@ const CreateDatabase: FC<Props> = (props) => {
   const onSubmit = () => {
     formRef.current?.validateFields()
     .then( (form)=> {
-      HomeService.createDatabase(form, (res) => {        
+      ConfigServices.createConfig(form, (res) => {        
         dispatch({
           type: "addDatabase",
           payload: res.data

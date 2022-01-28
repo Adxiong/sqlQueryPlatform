@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 21:29:38
+ * @LastEditTime: 2022-01-28 23:28:28
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
@@ -12,7 +12,7 @@ import styles from "./style/home.module.less"
 import { Button, Input, message, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import CreateDatabase from "./createDatabase";
-import services from "../../services/home"
+import ConfigServices from "../../services/config"
 import { DatabaseInstance } from "../../models/reducer/home";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStore } from "../../models/reducer";
@@ -26,7 +26,7 @@ const Home: React.FC<Props> = (props) => {
   const dispatch = useDispatch()
   const Homestore = useSelector((state: defaultStore) => state.HomeStore)
   useEffect(() => {    
-    services.queryDatabaselist((res: DatabaseInstance[]) => {      
+    ConfigServices.query((res: DatabaseInstance[]) => {      
       // setData(res)      
       dispatch({
         type: "setDatabaseList",
@@ -41,7 +41,7 @@ const Home: React.FC<Props> = (props) => {
   const onClickSetting = (id: string) => {
   }
   const onClickDelete = (id: string) => {
-    services.deleteDatabase(id, (res) => {
+    ConfigServices.deleteConfig(id, (res) => {
       dispatch({
         type: "deleteDatabase",
         payload: id,

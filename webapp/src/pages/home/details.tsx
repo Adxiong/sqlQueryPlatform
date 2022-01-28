@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-26 01:07:33
+ * @LastEditTime: 2022-01-28 23:27:10
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
@@ -13,6 +13,8 @@ import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./style/details.module.less"
 import TablePanel from "./tablePanel";
+import DatabaseService from '../../services/database';
+import { TableInstance } from "../../models/reducer/home";
 interface Props {
 
 }
@@ -40,8 +42,13 @@ const Details: FC = (props) => {
     },
   ]
   useEffect(() => {
-    const id = Number(searchParams.get('id'))
-    setDetailsId(id)
+    const id = searchParams.get('id')
+    if (!id) return
+    DatabaseService.query(id, (res: TableInstance[]) => {
+      console.log(res);
+      
+    })
+    // setDetailsId(id)
     
     return () => {
     }

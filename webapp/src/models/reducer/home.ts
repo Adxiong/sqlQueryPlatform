@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-26 20:27:22
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 21:29:10
+ * @LastEditTime: 2022-01-28 22:38:00
  */
 export interface DatabaseInstance {
   id: string;
@@ -23,6 +23,11 @@ export interface CreateDatabaseParams {
   port: number;
   user: string;
   password: string;
+}
+
+export interface TableInstance {
+  id: string;
+  name: string;
 }
 export interface HomeSateType {
   databaseList: DatabaseInstance[]
