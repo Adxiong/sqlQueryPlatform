@@ -4,23 +4,20 @@
  * @Author: Adxiong
  * @Date: 2022-01-21 13:39:30
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-24 00:39:53
+ * @LastEditTime: 2022-01-28 17:40:24
  */
 import { FC } from "react";
 import styles from "../card/card.module.less"
 import mysqlPng from "../../assets/img/mysql.png"
 import { SettingTwoTone, FundTwoTone, DeleteTwoTone} from '@ant-design/icons';
-export interface CardDataType {
-  title: string ;
-  img: string ;
-  desc: string ;
-}
+import { DatabaseInstance } from "../../models/reducer/home";
+
 
 interface Props {
-  data: CardDataType[] ;
-  clickDelete: (id: number) => void;
-  clickSetting: (id: number) => void ;
-  clickData: (id: number) => void;
+  data: DatabaseInstance[] ;
+  clickDelete: (id: string) => void;
+  clickSetting: (id: string) => void ;
+  clickData: (id: string) => void;
 }
 
 interface logoMapType {
@@ -37,20 +34,20 @@ const Card: FC<Props> = (props) => {
   return (
     <div id={styles.Card}>
       {
-        data.map( (item: CardDataType, index: number) => {
+        data.map( (item: DatabaseInstance) => {
           return (   
-            <div className={styles.cardItem} key={index}>
-              <img src={logoMap[item.title]} alt={item.desc} />
+            <div className={styles.cardItem} key={item.id}>
+              <img src={logoMap[item.type]} alt={item.name} />
               <div className={styles.content}>
-                <span className={styles.title}>{item.title}</span>
+                <span className={styles.title}>{item.name}</span>
                 <div className={styles.tools}>
-                  <div onClick={() => props.clickSetting(index)}>
+                  <div onClick={() => props.clickSetting(item.id)}>
                     <SettingTwoTone/>
                   </div>
-                  <div onClick={ () => props.clickData(index)}>
+                  <div onClick={ () => props.clickData(item.id)}>
                     <FundTwoTone/>
                   </div>
-                  <div onClick={() => props.clickDelete(index)}>
+                  <div onClick={() => props.clickDelete(item.id)}>
                     <DeleteTwoTone/>
                   </div>
                 </div>

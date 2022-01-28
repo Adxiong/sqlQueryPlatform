@@ -4,15 +4,18 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-27 01:51:05
+ * @LastEditTime: 2022-01-28 21:29:38
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
 import styles from "./style/home.module.less"
-import { Button, Input, Space } from "antd";
+import { Button, Input, message, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import CreateDatabase from "./createDatabase";
 import services from "../../services/home"
+import { DatabaseInstance } from "../../models/reducer/home";
+import { useDispatch, useSelector } from "react-redux";
+import { defaultStore } from "../../models/reducer";
 interface Props {
 
 }
@@ -20,32 +23,37 @@ interface Props {
 const Home: React.FC<Props> = (props) => {
   const navigate = useNavigate()
   const [showCreateDatabase, setShowCreateDatabase] = useState<boolean>(false)
-  const [data, setData] = useState<any[]>(new Array(8).fill({
-    title: "mysql",
-    desc: '数据库'
-  }))
-
-  useEffect(() => {
-    services.queryDatabaselist()
-    .then( res => {
-      console.log(res);
-      
-    }).catch( err => {
-      console.log(err);
-      
+  const dispatch = useDispatch()
+  const Homestore = useSelector((state: defaultStore) => state.HomeStore)
+  useEffect(() => {    
+    services.queryDatabaselist((res: DatabaseInstance[]) => {      
+      // setData(res)      
+      dispatch({
+        type: "setDatabaseList",
+        payload: res
+      })
     })
     return () => {
       
     }
   }, [])
 
-  const onClickSetting = (id: number) => {
+  const onClickSetting = (id: string) => {
   }
-  const onClickDelete = (id: number) => {
-    setData([...data.filter( (item,index) => index != id)])
+  const onClickDelete = (id: string) => {
+    services.deleteDatabase(id, (res) => {
+      dispatch({
+        type: "deleteDatabase",
+        payload: id,
+      })
+      message.success({
+        content: "删除成功",
+        duration: 1,
+      })
+    })
   }
 
-  const onClickData = (id: number) => {
+  const onClickData = (id: string) => {
     navigate(`/home/details?id=${id}`)
   }
   const onToggleCreateStatus = (status: boolean) => {
@@ -61,7 +69,7 @@ const Home: React.FC<Props> = (props) => {
         </Space>
       </div>
       <Card 
-        data={data} 
+        data={Homestore.databaseList} 
         clickData={onClickData}
         clickDelete={onClickDelete}
         clickSetting={onClickSetting}/>

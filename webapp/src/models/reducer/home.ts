@@ -4,23 +4,55 @@
  * @Author: Adxiong
  * @Date: 2022-01-26 20:27:22
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-26 20:29:22
+ * @LastEditTime: 2022-01-28 21:29:10
  */
+export interface DatabaseInstance {
+  id: string;
+  type: string;
+  name: string;
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+}
 
-interface HomeSateType {
-
+export interface CreateDatabaseParams {
+  type: string;
+  name: string;
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+}
+export interface HomeSateType {
+  databaseList: DatabaseInstance[]
 }
 interface Actios {
-  types: string,
-  data: any
+  type: string,
+  payload: any,
 }
 
 const HomeState: HomeSateType= {
-
+  databaseList: []
 }
 
-export default (state=HomeState, actions: Actios) => {
-  switch(actions.types) {
+export default (state=HomeState, actions: Actios) => {  
+  switch(actions.type) {
+    case "setDatabaseList":
+      return {
+        ...state,
+        databaseList: actions.payload
+      } 
+    case "deleteDatabase":
+      state.databaseList = state.databaseList.filter(item => item.id != actions.payload)
+      return {
+        ...state
+      }
+    case "addDatabase":
+      state.databaseList.push(actions.payload)
+      return {
+        ...state
+      }
     default: 
       return state
   }

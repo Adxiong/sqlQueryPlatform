@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-12 17:25:04
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-27 01:48:09
+ * @LastEditTime: 2022-01-28 03:44:25
  */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -22,7 +22,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-        rewrite: path => path.replace('^', '')
+        rewrite: (path) => path.replace(/^/, '')
       }
     }
   },

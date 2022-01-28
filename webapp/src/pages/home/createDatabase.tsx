@@ -4,43 +4,47 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-25 01:10:57
+ * @LastEditTime: 2022-01-28 20:32:16
  */
 
-import { Button, Form, Input, Modal } from "antd";
+import { Button, Form, Input, Modal, Select } from "antd";
 import { FormInstance, useForm } from "antd/lib/form/Form";
 import React, { createRef, FC, RefObject, useRef, useState } from "react";
 import styles from "./style/createDatabase.module.less"
-
+import { CreateDatabaseParams, DatabaseInstance } from "../../models/reducer/home"
+import HomeService from "../../services/home"
+import { useDispatch } from "react-redux";
+import { log } from "console";
 interface Props {
   clickCancel: () => void;
 }
 
-interface FormData {
-  name: string;
-  host: string;
-  port: number;
-  user: string;
-  password: string;
-}
+
 
 const CreateDatabase: FC<Props> = (props) => {
   const { clickCancel } = props
   const formRef:React.RefObject<FormInstance> = createRef<FormInstance>()
-  const initialValues: FormData = {
+  const dispatch = useDispatch()
+  const initialValues: CreateDatabaseParams = {
     name: "",
+    type: "mysql",
     host: "localhost",
     port: 3306,
     user: 'root',
     password: ''
   }
 
-  const [form, setForm] = useState<FormData>(initialValues)
+  const [form, setForm] = useState<CreateDatabaseParams>(initialValues)
   const onSubmit = () => {
     formRef.current?.validateFields()
     .then( (form)=> {
-      console.log(form);
-
+      HomeService.createDatabase(form, (res) => {        
+        dispatch({
+          type: "addDatabase",
+          payload: res.data
+        })
+        props.clickCancel()
+      })
     })
     .catch((err) => {
       console.error('表单验证失败', err)
@@ -95,6 +99,21 @@ const CreateDatabase: FC<Props> = (props) => {
             }
             >
             <Input autoComplete="off"/>
+          </Form.Item>
+          <Form.Item
+            label="数据库"
+            name="type"
+            rules={
+              [
+                {required: true}
+              ]
+            }
+          >
+            <Select>
+              <Select.Option key="mysql" value="mysql">
+                mysql
+              </Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item 
             label="主机"

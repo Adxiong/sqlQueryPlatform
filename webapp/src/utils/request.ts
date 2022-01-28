@@ -1,13 +1,14 @@
+import { resolve } from 'path/posix';
 /*
  * @Descripttion: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-12 17:31:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-26 01:06:00
+ * @LastEditTime: 2022-01-28 18:06:29
  */
 import { message } from "antd";
-import axios, { AxiosInstance, AxiosRequestConfig, Canceler, CancelToken } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, Canceler, CancelToken } from "axios";
 const CancelToken = axios.CancelToken
 let cancel: Canceler
 
@@ -15,27 +16,9 @@ const requestQueue: {
   [propsKey: string]: Canceler
 } = {}
 
-const http =  axios.create({
-  withCredentials: true,
-  timeout: 5000
-})
-
-http.interceptors.request.use( config => {
-  return config
-}, err => {
-  console.log(err);
-  return Promise.reject(err)
-})
-
-http.interceptors.response.use( response => {
-  return response
-}, err => {
-  return Promise.resolve(err.response)
-})
-
 class Request {
   config: any;
-  axios: AxiosInstance | null = null ;
+  axios: AxiosInstance | undefined;
   constructor () {
     this.createAxios()
     this.interceptors()
@@ -47,51 +30,83 @@ class Request {
     })
   }
   interceptors () {
-    this.axios?.interceptors.request.use( (config: AxiosRequestConfig) => {
-      if (requestQueue[config.url as string]) {
-        requestQueue[config.url as string]()
-      }
-      requestQueue[config.url as string] = cancel
-      return config
-    }, error => {
-      return Promise.reject(error)
-    })
-    this.axios?.interceptors.response.use( response => {
-      return response
-    }, error => {
-      if (error && error.response) {
-        const {data, status} = error.response;
-        message.error({
-          content: `${status}:${data}`,
-          duration: 2000,
-          top: 10
-        })
+    if (this.axios) {
+      this.axios.interceptors.request.use( (config: AxiosRequestConfig) => {
+        if (requestQueue[config.url as string]) {
+          requestQueue[config.url as string]()
+        }
+        requestQueue[config.url as string] = cancel
+        
+        return config
+      }, error => {
         return Promise.reject(error)
-      } else {
-        return Promise.reject(error)
-      }
-    })
+      })
+      this.axios.interceptors.response.use( response => {   
+        return response.data
+      }, error => {
+        if (error && error.response) {
+          const {data, status} = error.response;
+          message.error({
+            content: `${status}:${data}`,
+            duration: 2000,
+            top: 10
+          })
+          return Promise.reject(error)
+        } else {
+          return Promise.reject(error)
+        }
+      })    
+    }
   }
   
-  async get (url: string, params: any) {
-    return http.request({
-      url,
-      params,
-      cancelToken: new CancelToken( c => {
-        cancel = c
-      } )
+  async get <T> (url: string, params: any): Promise<T> {
+    return new Promise( (resolve, reject) => {
+      if (this.axios) {
+        this.axios.request({
+          url,
+          params,
+          cancelToken: new CancelToken( c => {
+            cancel = c
+          } )
+        })
+        .then( (res: AxiosResponse) => {
+          resolve(res.data)
+        })
+        .catch( err => {
+          reject(err)
+        })
+      } else {
+        reject("找不到axios实例对象")
+      }
     })
   }
 
   async post (url: string, data: any) {
-    return http.request({
-      method: 'post',
-      url,
-      data,
-      cancelToken: new CancelToken( c => {
-        cancel = c
+    if( this.axios ) {
+      return this.axios.request({
+        method: 'post',
+        url,
+        data,
+        cancelToken: new CancelToken( c => {
+          cancel = c
+        })
       })
-    })
+    }
+  }
+
+  async delete (url: string, id: string) {
+    if (this.axios){
+      return this.axios.request({
+        method: "delete",
+        url,
+        params: {
+          id
+        },
+        cancelToken: new CancelToken( c => {
+          cancel = c
+        })
+      })
+    }
   }
 }
 
