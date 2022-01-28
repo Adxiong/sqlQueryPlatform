@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 14:38:12
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:35:52
+ * @LastEditTime: 2022-01-29 00:15:41
  */
 import { CreateConfigParams, ConfigInstance } from '../models/reducer/config'
 import request from '../utils/request'
@@ -19,7 +19,7 @@ class ConfigService {
   }
 
   async createConfig(data: CreateConfigParams, callback?: (res: any) => void) {
-    const res= await request.post(api.config.createConfig, {
+    const res: ConfigInstance = await request.post(api.config.createConfig, {
       data
     })
     if (callback){ callback(res)}

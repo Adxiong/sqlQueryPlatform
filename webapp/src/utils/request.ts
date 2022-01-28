@@ -5,7 +5,7 @@ import { resolve } from 'path/posix';
  * @Author: Adxiong
  * @Date: 2022-01-12 17:31:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 18:06:29
+ * @LastEditTime: 2022-01-29 00:13:55
  */
 import { message } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, Canceler, CancelToken } from "axios";
@@ -81,17 +81,27 @@ class Request {
     })
   }
 
-  async post (url: string, data: any) {
-    if( this.axios ) {
-      return this.axios.request({
-        method: 'post',
-        url,
-        data,
-        cancelToken: new CancelToken( c => {
-          cancel = c
+  async post<T> (url: string, data: any): Promise<T> {
+    return new Promise( (resolve, reject) => {
+      if( this.axios ) {
+        this.axios.request({
+          method: 'post',
+          url,
+          data,
+          cancelToken: new CancelToken( c => {
+            cancel = c
+          })
         })
-      })
-    }
+        .then( (res: AxiosResponse) => {
+          resolve(res.data)
+        })
+        .catch( err => {
+          reject(err)
+        })
+      } else {
+        reject("找不到axios实例对象")
+      }
+    })
   }
 
   async delete (url: string, id: string) {

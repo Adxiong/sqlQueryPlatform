@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:35:21
+ * @LastEditTime: 2022-01-29 00:07:36
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
@@ -24,7 +24,7 @@ const Home: React.FC<Props> = (props) => {
   const navigate = useNavigate()
   const [showCreateDatabase, setShowCreateDatabase] = useState<boolean>(false)
   const dispatch = useDispatch()
-  const Homestore = useSelector((state: defaultStore) => state.configStore)
+  const Configstore = useSelector((state: defaultStore) => state.configStore)
   useEffect(() => {    
     ConfigServices.query((res: ConfigInstance[]) => {      
       // setData(res)      
@@ -69,7 +69,7 @@ const Home: React.FC<Props> = (props) => {
         </Space>
       </div>
       <Card 
-        data={Homestore.databaseList} 
+        data={Configstore.configList} 
         clickData={onClickData}
         clickDelete={onClickDelete}
         clickSetting={onClickSetting}/>

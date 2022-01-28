@@ -1,11 +1,15 @@
+
 /*
  * @Description: 
  * @version: 
  * @Author: Adxiong
  * @Date: 2022-01-26 20:27:22
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:32:20
+ * @LastEditTime: 2022-01-29 00:03:41
  */
+
+import { Actions } from "./commons"
+
 export interface ConfigInstance {
   id: string;
   type: string;
@@ -26,31 +30,27 @@ export interface CreateConfigParams {
 }
 
 export interface ConfigStateType {
-  databaseList: ConfigInstance[]
-}
-interface Actios {
-  type: string,
-  payload: any,
+  configList: ConfigInstance[]
 }
 
-const ConfigState: ConfigStateType= {
-  databaseList: []
+const State: ConfigStateType= {
+  configList: []
 }
 
-export default (state=ConfigState, actions: Actios) => {  
+export default (state=State, actions: Actions) => {  
   switch(actions.type) {
     case "setDatabaseList":
       return {
         ...state,
-        databaseList: actions.payload
+        configList: actions.payload
       } 
     case "deleteDatabase":
-      state.databaseList = state.databaseList.filter(item => item.id != actions.payload)
+      state.configList = state.configList.filter(item => item.id != actions.payload)
       return {
         ...state
       }
     case "addDatabase":
-      state.databaseList.push(actions.payload)
+      state.configList.push(actions.payload)
       return {
         ...state
       }
