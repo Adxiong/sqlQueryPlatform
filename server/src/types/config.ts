@@ -2,11 +2,10 @@
  * @Description: 
  * @version: 
  * @Author: Adxiong
- * @Date: 2022-01-18 23:51:27
+ * @Date: 2022-01-29 13:45:10
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 13:43:56
+ * @LastEditTime: 2022-01-29 13:45:10
  */
-
 export interface ConfigInstance {
   id: string;
   type: string;
@@ -24,14 +23,4 @@ export interface CreateConfigParams {
   port: number;
   user: string;
   password: string;
-}
-
-export interface DatabaseInstance {
-  id: string;
-  name: string;
-}
-
-export interface TableInstance {
-  id: string;
-  name: string
 }

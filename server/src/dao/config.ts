@@ -4,9 +4,9 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:22:14
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:23:22
+ * @LastEditTime: 2022-01-29 13:46:31
  */
-import { ConfigInstance, CreateConfigParams } from "../types/database";
+import { ConfigInstance, CreateConfigParams } from "../types/config";
 import fsutils from "../utils/fsutils";
 import logger from "../utils/logger";
 import config from '../config';

@@ -4,19 +4,18 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:19:33
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:22:08
+ * @LastEditTime: 2022-01-29 13:45:40
  */
-import { CreateConfigParams } from './../types/database';
+import { CreateConfigParams, ConfigInstance } from './../types/config';
 import { Router, Response, Request, NextFunction } from 'express';
-import DatabaseService from "../service/database";
-import { ConfigInstance } from '../types/database';
+import ConfigService from "../service/config";
 import { ApiResult, ResponseStatus} from '../utils/apiResult';
 
 const router =  Router()
 
 
 router.get("/list", (req: Request, res: Response, next: NextFunction) => {
-  DatabaseService.queryConfigList()
+  ConfigService.queryConfigList()
   .then( (data: ConfigInstance[]) => {
     res.json(new ApiResult(ResponseStatus.success, data))
   })
@@ -24,19 +23,19 @@ router.get("/list", (req: Request, res: Response, next: NextFunction) => {
 }) 
 
 router.post('/createConfig', (req: Request, res: Response, next: NextFunction) => {
-  DatabaseService.createConfig(req.body.data as CreateConfigParams)
+  ConfigService.createConfig(req.body.data as CreateConfigParams)
   .then( (data: ConfigInstance) => {
     res.json(new ApiResult(ResponseStatus.success, data,"创建成功"))
   })
   .catch(next)
 })
 
-router.delete('/deleteDatabase', (req: Request, res: Response, next: NextFunction) => {  
+router.delete('/deleteConfig', (req: Request, res: Response, next: NextFunction) => {  
   if(!req.query.id){
     res.json(new ApiResult(ResponseStatus.fail,"","id为空！"))
     return
   }
-  DatabaseService.deleteConfig(req.query.id as string)
+  ConfigService.deleteConfig(req.query.id as string)
   .then( () => {        
     res.json(new ApiResult(ResponseStatus.success,"","删除成功"))    
   })
