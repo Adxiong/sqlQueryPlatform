@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:16:47
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:12:19
+ * @LastEditTime: 2022-01-30 03:15:46
  */
 import * as mysql from "mysql";
 import logger from "../utils/logger";
@@ -42,7 +42,7 @@ class PoolUtil {
           logger.error('执行sql错误', err.sql)
           reject(err)
         } else {
-          resolve(formatRes<T>(sql, result))
+          resolve(result)
         }
       })
     })

@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 13:46:16
+ * @LastEditTime: 2022-01-30 03:09:23
  */
 import { DatabaseInstance, TableInstance } from './../types/database';
 import { Router, Response, Request, NextFunction } from 'express';
@@ -25,14 +25,13 @@ router.post('/list', (req: Request, res: Response, next: NextFunction) => {
   .catch(next)
 })
 
-
-router.post('/tableList',(req: Request, res: Response, next: NextFunction) => {
-  if(!req.body.id) {
-    res.json(new ApiResult(ResponseStatus.fail, "", "id为空！"))
+router.post('/queryTableData', (req: Request, res: Response, next: NextFunction) => {
+  if(!req.body.databaseName || !req.body.tableName) {
+    res.json(new ApiResult(ResponseStatus.fail, "", "数据不完整"))
     return
   }
-  DatabaseService.tableList(req.body.id)
-  .then( (data: TableInstance[]) => {
+  DatabaseService.queryTableInfoByName(req.body.databaseName, req.body.tableName)
+  .then( (data: any[]) => {
     res.json(new ApiResult(ResponseStatus.success, data))
   })
   .catch(next)
