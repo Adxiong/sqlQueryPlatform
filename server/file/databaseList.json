@@ -6,4 +6,28 @@
     "port": 3306,
     "user": "root",
     "password": "123456"
+}, {
+    "id": "5396018e-ba78-4cac-be00-c16b9d8c09a3",
+    "type": "mysql",
+    "name": "test",
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "123123"
+}, {
+    "id": "b4aef6cc-de3e-45fd-9da0-7954099ebdca",
+    "type": "mysql",
+    "name": "hahah",
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "12313"
+}, {
+    "id": "5c93f946-76c7-4051-a473-a4fc7e3bf18f",
+    "type": "mysql",
+    "name": "localhost1",
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "2312312"
 }]
