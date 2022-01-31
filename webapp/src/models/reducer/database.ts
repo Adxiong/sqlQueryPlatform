@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:30:16
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 00:08:08
+ * @LastEditTime: 2022-01-31 19:02:11
  */
 
 import { Actions } from './commons';
@@ -12,15 +12,22 @@ import { Actions } from './commons';
 export interface DatabaseInstance {
   id: string;
   name: string;
+  tables: TableInstance[]
 }
 
+export interface TableInstance {
+  id: string;
+  name: string
+}
 
 export interface DatabaseStateType {
-  databaseList: DatabaseInstance[]
+  databaseList: DatabaseInstance[],
+  tableData: any[]
 }
 
 const State: DatabaseStateType = {
-  databaseList: []
+  databaseList: [],
+  tableData: []
 }
 
 export default (state=State, actions: Actions) => {
@@ -34,6 +41,11 @@ export default (state=State, actions: Actions) => {
       state.databaseList = state.databaseList.filter(item => item.id != actions.payload)
       return {
         ...state
+      }
+    case "setTableData":
+      return {
+        ...state,
+        tableData: actions.payload
       }
     default:
       return state

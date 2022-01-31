@@ -5,7 +5,7 @@ import { resolve } from 'path/posix';
  * @Author: Adxiong
  * @Date: 2022-01-12 17:31:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 00:13:55
+ * @LastEditTime: 2022-01-30 03:08:06
  */
 import { message } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, Canceler, CancelToken } from "axios";
@@ -48,7 +48,7 @@ class Request {
           const {data, status} = error.response;
           message.error({
             content: `${status}:${data}`,
-            duration: 2000,
+            duration: 1,
             top: 10
           })
           return Promise.reject(error)

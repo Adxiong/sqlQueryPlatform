@@ -7,16 +7,24 @@
   box-shadow: 1px 1px 20px rgb(0 0 0 / 4%);
   display: flex;
   .leftPanel {
-    width: 200px;
+    // width: 250px;
     :global(.ant-tree) {
-      padding: 10px 5px;
       box-sizing: border-box;
       min-height: 100%;
       background-color: rgb(80 80 80 / 4%);
+      width: 250px;
+    }
+    :global(.ant-tree-treenode){
+      width: 250px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: flex;
     }
   }
   .content {
     width: 100%;
+    overflow: hidden;
     padding: 0 10px;
     box-sizing: border-box;
   }
