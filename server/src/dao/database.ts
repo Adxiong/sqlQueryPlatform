@@ -4,12 +4,12 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-01 20:43:34
+ * @LastEditTime: 2022-02-02 01:41:21
  */
 
 
 import PoolUtil, { ConfigType } from "./pool";
-import { DatabaseInstance, TableInstance } from "../types/database";
+import { DatabaseInstance, TableDataInfo, TableInstance } from "../types/database";
 import fsutils from "../utils/fsutils";
 import logger from "../utils/logger";
 import config from '../config';
@@ -57,17 +57,18 @@ class DatabaseDao {
    * @param name 
    * @returns 
    */
-  async queryTableInfoByName (databaseName: string, tableName: string): Promise<object> {
+  async queryTableInfoByName (databaseName: string, tableName: string): Promise<TableDataInfo> {
     // const useDatabaseSql = 'use ?;'
     const sql = `select * from ${databaseName}.${tableName};`
     const descSql = `desc ${databaseName}.${tableName};`
     // await this.pool.query(useDatabaseSql, [databaseName])
     const tableData = await this.pool.query(sql, [])
     const descData = await this.pool.query(descSql, [])
-    return {
+    const data: TableDataInfo = {
       tableData,
       descData
     }
+    return data
   }
 
   //删除表

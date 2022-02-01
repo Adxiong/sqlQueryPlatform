@@ -4,9 +4,9 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-30 03:09:23
+ * @LastEditTime: 2022-02-02 01:39:48
  */
-import { DatabaseInstance, TableInstance } from './../types/database';
+import { DatabaseInstance, TableDataInfo } from './../types/database';
 import { Router, Response, Request, NextFunction } from 'express';
 import DatabaseService from "../service/database";
 import { ApiResult, ResponseStatus} from '../utils/apiResult';
@@ -31,7 +31,7 @@ router.post('/queryTableData', (req: Request, res: Response, next: NextFunction)
     return
   }
   DatabaseService.queryTableInfoByName(req.body.databaseName, req.body.tableName)
-  .then( (data: any[]) => {
+  .then( (data: TableDataInfo) => {
     res.json(new ApiResult(ResponseStatus.success, data))
   })
   .catch(next)
