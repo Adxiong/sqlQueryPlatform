@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-30 03:06:02
+ * @LastEditTime: 2022-02-01 20:43:34
  */
 
 
@@ -57,20 +57,18 @@ class DatabaseDao {
    * @param name 
    * @returns 
    */
-  async queryTableInfoByName (databaseName: string, tableName: string): Promise<any[]> {
+  async queryTableInfoByName (databaseName: string, tableName: string): Promise<object> {
     // const useDatabaseSql = 'use ?;'
-    const sql = `select * from ${databaseName}.${tableName}`
+    const sql = `select * from ${databaseName}.${tableName};`
+    const descSql = `desc ${databaseName}.${tableName};`
     // await this.pool.query(useDatabaseSql, [databaseName])
-    const data = await this.pool.query(sql, [])
-    return data
+    const tableData = await this.pool.query(sql, [])
+    const descData = await this.pool.query(descSql, [])
+    return {
+      tableData,
+      descData
+    }
   }
-
-  //查询表结构
-  async descTableInfoByName (databaseName: string, tableName: string): Promise<any[]> {
-    const sql = `desc ${databaseName}.${tableName}`
-    const data = await this.pool.query(sql, [databaseName, tableName])
-    return data
-  } 
 
   //删除表
   async deleteTableByName (databaseName: string, tableName: string): Promise<void> {
