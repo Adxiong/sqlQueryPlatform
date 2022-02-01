@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-31 19:49:57
+ * @LastEditTime: 2022-02-02 01:51:57
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
@@ -14,7 +14,7 @@ import { useSearchParams } from "react-router-dom";
 import styles from "./style/details.module.less"
 import TablePanel from "../configPage/tablePanel";
 import DatabaseService from '../../services/database';
-import { DatabaseInstance, TableInstance } from "../../models/reducer/database";
+import { DatabaseInstance, TableDataInfoType, TableInstance } from "../../models/reducer/database";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStore } from "../../models/reducer";
 import { LeafDataType, TreeDataType } from "../../models/reducer/commons";
@@ -36,6 +36,8 @@ const Details: FC = (props) => {
   const DatabaseStore = useSelector( (state: defaultStore) => state.databaseStore)
   const [data, setData] = useState<any[]>([])
   const [columns, setColumns] = useState<any[]>([])
+  const [descData, setDescData] = useState<any[]>([])
+  const [descColumns, setDescColumns] = useState<any[]>([])
   const [treeData, setTreeData] = useState<any[]>()
   const [checkedTreeNode, setCheckedTreeNode] = useState<checkedTreeInfo>({
     databaseId: "",
@@ -75,22 +77,60 @@ const Details: FC = (props) => {
         tableName: e.node.title
       })
       .then ( (res) => {
-        const result = res as any[]
+        const result = res as TableDataInfoType
         dispatch({
           type: 'setTableData',
           payload: result
         })
-        setData(result)
+        setData(result.tableData)
         setColumns(() => {
-          if (!result.length) {
+          if (!result.tableData.length) {
             return result
           }
-          const keys = Object.keys(result[0])
+          const keys = Object.keys(result.tableData[0])
           const data = []
           for (const item of keys) {
             data.push({
               title: item,
               dataIndex: item,
+              sortDirections: ["ascend","descend"],
+              sorter: (rowA: string | number, rowB: string | number) => {                
+                if (rowA > rowB) {
+                  return 1
+                } else if( rowA < rowB) {
+                  return -1
+                } else {
+                  return 0
+                }
+              },
+              render: (value: string)=> {
+                return value ?? "null"
+              }
+            })
+          }
+          return data
+        })
+        setDescData(result.descData)
+        setDescColumns( () => {
+          if (!result.descData.length) {
+            return result
+          }
+          const keys = Object.keys(result.descData[0])
+          const data = []
+          for (const item of keys) {
+            data.push({
+              title: item,
+              dataIndex: item,
+              sortDirections: ["ascend","descend"],
+              sorter: (rowA: string | number, rowB: string | number) => {                
+                if (rowA > rowB) {
+                  return 1
+                } else if( rowA < rowB) {
+                  return -1
+                } else {
+                  return 0
+                }
+              },
               render: (value: string)=> {
                 return value ?? "null"
               }
@@ -150,6 +190,7 @@ const Details: FC = (props) => {
         <Tabs>
           <Tabs.TabPane tab="数据" key={1}>
             <Table
+              rowKey={'id'}
               tableLayout="fixed"
               columns={columns}
               dataSource={data}
@@ -158,8 +199,8 @@ const Details: FC = (props) => {
           <Tabs.TabPane tab="结构" key={2}>
             <Table
               tableLayout="fixed"
-              columns={columns}
-              dataSource={data}
+              columns={descColumns}
+              dataSource={descData}
             ></Table>
           </Tabs.TabPane>
           <Tabs.TabPane tab="查询" key={3}>

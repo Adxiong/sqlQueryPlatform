@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:30:16
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-31 19:02:11
+ * @LastEditTime: 2022-02-02 01:49:27
  */
 
 import { Actions } from './commons';
@@ -20,9 +20,14 @@ export interface TableInstance {
   name: string
 }
 
+export interface TableDataInfoType {
+  tableData: any[],
+  descData: any[]
+}
+
 export interface DatabaseStateType {
   databaseList: DatabaseInstance[],
-  tableData: any[]
+  tableData: TableDataInfoType[]
 }
 
 const State: DatabaseStateType = {
