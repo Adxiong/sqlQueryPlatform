@@ -5,7 +5,7 @@ import { log } from 'console';
  * @Author: Adxiong
  * @Date: 2022-01-28 23:25:36
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-31 19:10:14
+ * @LastEditTime: 2022-02-04 02:04:10
  */
 
 import request from "../utils/request"
@@ -17,12 +17,18 @@ class DatabaseService {
     if (callback){ callback(res)}
   }
 
-  async queryTableData(data: {databaseName: string, tableName: string}, callback?: (res: any) => void) {
+  async queryTableData(data: {databaseName: string, tableName: string}) {
     const res = await request.post(api.database.queryTableData, {
       databaseName: data.databaseName,
       tableName: data.tableName
     })    
-    // if (callback){ callback(res)}
+    return res
+  }
+
+  async queryData( sqlContent: string){
+    const res = await request.post(api.database.queryData, {
+      sqlContent
+    })
     return res
   }
 }
