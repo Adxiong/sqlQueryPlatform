@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-02 01:41:21
+ * @LastEditTime: 2022-02-04 01:59:19
  */
 
 
@@ -76,6 +76,10 @@ class DatabaseDao {
     const sql = ''
   }
 
+  async queryData(sqlContent: string): Promise<any[]> {
+    const data = await this.pool.query(sqlContent,[])
+    return data
+  }
 }
 
 export default new DatabaseDao()
