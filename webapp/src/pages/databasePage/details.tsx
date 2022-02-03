@@ -4,11 +4,11 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-02 01:51:57
+ * @LastEditTime: 2022-02-03 01:07:17
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
-import { Table, Tabs } from "antd";
+import { Button, Select, Table, Tabs } from "antd";
 import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./style/details.module.less"
@@ -21,6 +21,7 @@ import { LeafDataType, TreeDataType } from "../../models/reducer/commons";
 import { Key } from "antd/lib/table/interface";
 import DirectoryTree from "antd/lib/tree/DirectoryTree";
 import { EventDataNode } from "antd/lib/tree";
+import TextArea from "antd/lib/input/TextArea";
 interface Props {
 
 }
@@ -38,7 +39,7 @@ const Details: FC = (props) => {
   const [columns, setColumns] = useState<any[]>([])
   const [descData, setDescData] = useState<any[]>([])
   const [descColumns, setDescColumns] = useState<any[]>([])
-  const [treeData, setTreeData] = useState<any[]>()
+  const [treeData, setTreeData] = useState<any[]>([])
   const [checkedTreeNode, setCheckedTreeNode] = useState<checkedTreeInfo>({
     databaseId: "",
     tableId: ""
@@ -78,10 +79,6 @@ const Details: FC = (props) => {
       })
       .then ( (res) => {
         const result = res as TableDataInfoType
-        dispatch({
-          type: 'setTableData',
-          payload: result
-        })
         setData(result.tableData)
         setColumns(() => {
           if (!result.tableData.length) {
@@ -174,7 +171,7 @@ const Details: FC = (props) => {
     return () => {
     }
   }, [])
- 
+
   return (
     <div id={styles.detailsPanel}>
       <div className={styles.leftPanel}>
@@ -204,11 +201,34 @@ const Details: FC = (props) => {
             ></Table>
           </Tabs.TabPane>
           <Tabs.TabPane tab="查询" key={3}>
-            <Table
-              tableLayout="fixed"
-              columns={columns}
-              dataSource={data}
-            ></Table>
+            <div className={styles.searchPanel}>
+              <div className={styles.searchTopArea}>
+                
+                <div className={styles.tools}>
+                  <Select style={{minWidth: "200px"}}>
+                    {
+                      treeData.map( item => {
+                        return (
+                          <Select.Option key={item.id} value={item.title}>{item.title}</Select.Option>
+                        )
+                      })
+                    }
+                  </Select>
+                  <Button>执行</Button>
+                </div>
+                <TextArea 
+                  autoSize={{minRows:8, maxRows:8}} 
+                  autoFocus>
+
+                </TextArea>
+              </div>
+              <Table
+                tableLayout="fixed"
+                columns={columns}
+                dataSource={data}
+              ></Table>
+            </div>
+            
           </Tabs.TabPane>
         </Tabs>
       </div>
