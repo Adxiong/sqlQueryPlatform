@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-04 01:59:19
+ * @LastEditTime: 2022-02-04 21:54:50
  */
 
 
@@ -71,10 +71,6 @@ class DatabaseDao {
     return data
   }
 
-  //删除表
-  async deleteTableByName (databaseName: string, tableName: string): Promise<void> {
-    const sql = ''
-  }
 
   async queryData(sqlContent: string): Promise<any[]> {
     const data = await this.pool.query(sqlContent,[])
