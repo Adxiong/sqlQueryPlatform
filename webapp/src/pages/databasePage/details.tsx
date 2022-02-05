@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-03 01:07:17
+ * @LastEditTime: 2022-02-05 20:58:50
  */
 
 import { FrownFilled, FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
@@ -82,7 +82,7 @@ const Details: FC = (props) => {
         setData(result.tableData)
         setColumns(() => {
           if (!result.tableData.length) {
-            return result
+            return result as any
           }
           const keys = Object.keys(result.tableData[0])
           const data = []
@@ -108,9 +108,9 @@ const Details: FC = (props) => {
           return data
         })
         setDescData(result.descData)
-        setDescColumns( () => {
+        setDescColumns( () =>{
           if (!result.descData.length) {
-            return result
+            return result as any
           }
           const keys = Object.keys(result.descData[0])
           const data = []
@@ -119,7 +119,7 @@ const Details: FC = (props) => {
               title: item,
               dataIndex: item,
               sortDirections: ["ascend","descend"],
-              sorter: (rowA: string | number, rowB: string | number) => {                
+              sorter(rowA: string | number, rowB: string | number) {                
                 if (rowA > rowB) {
                   return 1
                 } else if( rowA < rowB) {
@@ -128,7 +128,7 @@ const Details: FC = (props) => {
                   return 0
                 }
               },
-              render: (value: string)=> {
+              render(value: string) {
                 return value ?? "null"
               }
             })
