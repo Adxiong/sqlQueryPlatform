@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:26:05
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-04 01:36:21
+ * @LastEditTime: 2022-02-06 20:14:25
  */
 import { DatabaseInstance, TableDataInfo } from './../types/database';
 import { Router, Response, Request, NextFunction } from 'express';
@@ -19,7 +19,8 @@ router.post('/list', (req: Request, res: Response, next: NextFunction) => {
     return
   }
   DatabaseService.databaseList(req.body.id)
-  .then( (data: DatabaseInstance[]) => {
+  .then( (data: DatabaseInstance[]) => {    
+    req.session.databaseConfigId = req.body.id
     res.json(new ApiResult(ResponseStatus.success, data))
   })
   .catch(next)
@@ -38,11 +39,12 @@ router.post('/queryTableData', (req: Request, res: Response, next: NextFunction)
 })
 
 router.post('/queryData', (req: Request, res: Response, next: NextFunction) => {
-  if(!req.body.sqlContent) {
+  
+  if(!req.session.databaseConfigId || !req.body.sqlContent || !req.body.selectDatabase) {
     res.json(new ApiResult(ResponseStatus.fail, "", "查询语句为空"))
     return
   }
-  DatabaseService.queryData(req.body.sqlContent)
+  DatabaseService.queryData(req.session.databaseConfigId, req.body.selectDatabase, req.body.sqlContent)
   .then( (data: any[]) => {
     res.json(new ApiResult(ResponseStatus.success, data))
   })

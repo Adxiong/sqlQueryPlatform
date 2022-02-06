@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:19:33
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 13:45:40
+ * @LastEditTime: 2022-02-06 17:17:27
  */
 import { CreateConfigParams, ConfigInstance } from './../types/config';
 import { Router, Response, Request, NextFunction } from 'express';

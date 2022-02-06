@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 14:11:57
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 03:46:31
+ * @LastEditTime: 2022-02-06 18:45:36
  */
 import * as express from 'express';
 import config from './config';
@@ -14,6 +14,7 @@ import * as bodyParser from 'body-parser';
 import * as session from "express-session";
 import pool from './dao/pool';
 import api from './controller'
+import util from './utils/util';
 
 const app = express()
 // 跨域设置
@@ -31,7 +32,19 @@ app.use(function (req, res, next) {
   }
 })
 
-// app.use(cookieParser)
+app.use(session({
+  // store: {},
+  saveUninitialized: false,
+  resave: false,
+  genid () {
+    return util.uuid()
+  },
+  secret: "secret",
+  cookie: {
+    maxAge: 1000 * 60 * 60
+  }
+}))
+
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 

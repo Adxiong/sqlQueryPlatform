@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-18 23:28:15
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-04 21:54:50
+ * @LastEditTime: 2022-02-06 17:19:20
  */
 
 
@@ -72,9 +72,17 @@ class DatabaseDao {
   }
 
 
-  async queryData(sqlContent: string): Promise<any[]> {
-    const data = await this.pool.query(sqlContent,[])
-    return data
+  async queryData(sessionId: string,  selectDatabase: string, sqlContent: string): Promise<any[]> {
+    const configs = JSON.parse(await fsutils.ReadFile(config.databaseFilePath))
+    const configInfo: ConfigInstance = configs.filter( item => item.id == sessionId)[0]
+    const pool = new PoolUtil({
+      host: configInfo.host,
+      port: configInfo.port,
+      user: configInfo.user,
+      password: configInfo.password,
+      database: selectDatabase
+    } as ConfigType)
+    return await pool.query(sqlContent, [])
   }
 }
 

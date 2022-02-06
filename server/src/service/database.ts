@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-29 13:45:01
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-04 01:58:30
+ * @LastEditTime: 2022-02-06 17:19:52
  */
 import DatabaseDao from "../dao/database"
 import { DatabaseInstance, TableDataInfo, TableInstance } from "../types/database"
@@ -19,8 +19,8 @@ class DatabaseService {
     return await DatabaseDao.queryTableInfoByName(databaseName, tableName)
   }
 
-  async queryData(sqlContent: string): Promise<any[]> {
-    return await DatabaseDao.queryData(sqlContent)
+  async queryData(sessionId: string, selectDatabase: string, sqlContent: string): Promise<any[]> {
+    return await DatabaseDao.queryData(sessionId, selectDatabase, sqlContent)
   }
 }
 
