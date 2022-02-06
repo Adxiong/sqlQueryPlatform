@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:30:16
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-02 01:49:27
+ * @LastEditTime: 2022-02-06 20:49:28
  */
 
 import { Actions } from './commons';
@@ -41,11 +41,6 @@ export default (state=State, actions: Actions) => {
       return {
         ...state,
         databaseList: actions.payload
-      }
-    case "rmDatabase":
-      state.databaseList = state.databaseList.filter(item => item.id != actions.payload)
-      return {
-        ...state
       }
     case "setTableData":
       return {

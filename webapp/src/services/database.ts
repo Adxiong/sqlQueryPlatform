@@ -5,7 +5,7 @@ import { log } from 'console';
  * @Author: Adxiong
  * @Date: 2022-01-28 23:25:36
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-04 02:04:10
+ * @LastEditTime: 2022-02-06 15:43:44
  */
 
 import request from "../utils/request"
@@ -25,9 +25,14 @@ class DatabaseService {
     return res
   }
 
-  async queryData( sqlContent: string){
+  async queryData( data: {
+    sqlContent: string;
+    selectDatabase: string
+  }){
+    const {sqlContent, selectDatabase} = data
     const res = await request.post(api.database.queryData, {
-      sqlContent
+      sqlContent,
+      selectDatabase
     })
     return res
   }
