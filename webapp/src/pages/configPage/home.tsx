@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 00:07:36
+ * @LastEditTime: 2022-02-08 01:45:12
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
@@ -16,6 +16,7 @@ import ConfigServices from "../../services/config"
 import { ConfigInstance } from "../../models/reducer/config";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStore } from "../../models/reducer";
+import { Mode } from "../../models/reducer/commons";
 interface Props {
 
 }
@@ -23,6 +24,8 @@ interface Props {
 const Home: React.FC<Props> = (props) => {
   const navigate = useNavigate()
   const [showCreateDatabase, setShowCreateDatabase] = useState<boolean>(false)
+  const [mode, setMode] = useState<Mode>(Mode.EDIT)
+  const [modifyConfig, setModifyConfig] = useState<ConfigInstance>()
   const dispatch = useDispatch()
   const Configstore = useSelector((state: defaultStore) => state.configStore)
   useEffect(() => {    
@@ -39,6 +42,14 @@ const Home: React.FC<Props> = (props) => {
   }, [])
 
   const onClickSetting = (id: string) => {
+    for (const item of Configstore.configList ) {
+      if (item.id == id) {
+        setMode(Mode.MODIFY)
+        setModifyConfig(item)
+        setShowCreateDatabase(true)
+        return
+      }      
+    }
   }
   const onClickDelete = (id: string) => {
     ConfigServices.deleteConfig(id, (res) => {
@@ -76,6 +87,8 @@ const Home: React.FC<Props> = (props) => {
       {
         showCreateDatabase && (
           <CreateDatabase
+            mode={mode}
+            defaultConfig={modifyConfig}
             clickCancel={ () => onToggleCreateStatus(false)}
           />
         )

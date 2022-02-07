@@ -4,18 +4,21 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-28 23:32:59
+ * @LastEditTime: 2022-02-08 01:38:51
  */
 
 import { Button, Form, Input, Modal, Select } from "antd";
 import { FormInstance, useForm } from "antd/lib/form/Form";
 import React, { createRef, FC, RefObject, useRef, useState } from "react";
 import styles from "./style/createDatabase.module.less"
-import { CreateConfigParams } from "../../models/reducer/config"
+import { ConfigInstance, CreateConfigParams } from "../../models/reducer/config"
 import ConfigServices from "../../services/config"
 import { useDispatch } from "react-redux";
 import { log } from "console";
+import { Mode } from "../../models/reducer/commons"
 interface Props {
+  mode: Mode,
+  defaultConfig?: ConfigInstance,
   clickCancel: () => void;
 }
 
@@ -26,12 +29,12 @@ const CreateConfig: FC<Props> = (props) => {
   const formRef:React.RefObject<FormInstance> = createRef<FormInstance>()
   const dispatch = useDispatch()
   const initialValues: CreateConfigParams = {
-    name: "",
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    user: 'root',
-    password: ''
+    name: props.defaultConfig?.name ?? "",
+    type: props.defaultConfig?.type ?? "mysql",
+    host: props.defaultConfig?.host ?? "localhost",
+    port: props.defaultConfig?.port ?? 3306,
+    user: props.defaultConfig?.user ?? 'root',
+    password: props.defaultConfig?.password ?? ''
   }
 
   const [form, setForm] = useState<CreateConfigParams>(initialValues)
@@ -68,7 +71,7 @@ const CreateConfig: FC<Props> = (props) => {
   return (
     <div id={styles.AddDatabasePanel}>
       <Modal 
-        title="创建连接" 
+        title={ props.mode == Mode.EDIT ? "创建连接" : "修改连接"} 
         centered
         visible={true}
         onCancel={clickCancel}
