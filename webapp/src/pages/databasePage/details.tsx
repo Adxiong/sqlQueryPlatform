@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 23:04:20
+ * @LastEditTime: 2022-02-08 23:25:56
  */
 
 import { Button, Select, Table, Tabs } from "antd";
@@ -144,7 +144,7 @@ const Details: FC = (props) => {
     if (delayTime) {
       clearTimeout(delayTime)
     }
-    setTimeout(() => {
+    delayTime = setTimeout(() => {
       setSqlContent(e.target.value)
     }, 300);
   }

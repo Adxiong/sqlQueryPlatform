@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 16:50:28
+ * @LastEditTime: 2022-02-08 23:25:08
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
@@ -28,6 +28,8 @@ const Home: React.FC<Props> = (props) => {
   const [modifyConfig, setModifyConfig] = useState<ConfigInstance>()
   const dispatch = useDispatch()
   const Configstore = useSelector((state: defaultStore) => state.configStore)
+  const [filterContent, setFilterContent] = useState<string>("")
+  let delay: NodeJS.Timeout
   useEffect(() => {    
     ConfigServices.query((res: ConfigInstance[]) => {      
       // setData(res)      
@@ -72,16 +74,25 @@ const Home: React.FC<Props> = (props) => {
     setShowCreateDatabase(status)
   }
 
+  const FilterDatabase = (e: {target: {value: string}}) => {
+    if (delay) {
+      clearTimeout(delay)
+    }
+    delay = setTimeout(() => {
+      setFilterContent(e.target.value)      
+    }, 300);
+  }
+
   return (
     <div id={styles.HomePage}>
       <div className={styles.HomeTopPanel}>
         <Space>
-          <Input size="large" placeholder="搜索数据库"></Input>
+          <Input size="large" placeholder="搜索数据库" onChange={FilterDatabase}></Input>
           <Button size="large" type="primary" onClick={() => onToggleCreateStatus(true)}>创建</Button>
         </Space>
       </div>
       <Card 
-        data={Configstore.configList} 
+        data={Configstore.configList.filter( item => item.name.includes(filterContent))} 
         clickData={onClickData}
         clickDelete={onClickDelete}
         clickSetting={onClickSetting}/>
