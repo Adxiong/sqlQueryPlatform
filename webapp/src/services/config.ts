@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 14:38:12
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 14:50:13
+ * @LastEditTime: 2022-02-08 22:52:01
  */
 import { CreateConfigParams, ConfigInstance } from '../models/reducer/config'
 import request from '../utils/request'

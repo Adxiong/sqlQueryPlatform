@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 00:50:20
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-06 21:05:58
+ * @LastEditTime: 2022-02-08 23:04:20
  */
 
 import { Button, Select, Table, Tabs } from "antd";
@@ -66,7 +66,7 @@ const Details: FC = (props) => {
       })
       .then ( (res) => {
         const result = res as TableDataInfoType
-        if (!Object.keys(result.tableData[0]).includes('id')){
+        if (result.tableData.length && !Object.keys(result.tableData[0]).includes('id')){
           result.tableData.map( (item, index) => {
             item.id = index
           })  
@@ -156,7 +156,7 @@ const Details: FC = (props) => {
     })
     .then( (res) => {
       const data: any[] = res as any[]
-      if (!Object.keys(data[0]).includes('id')){
+      if (data.length && !Object.keys(data[0]).includes('id')){
         data.map( (item, index) => {
           item.id = index
         })  

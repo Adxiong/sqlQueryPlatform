@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:57:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 01:34:32
+ * @LastEditTime: 2022-02-08 22:50:38
  */
 
 export interface Actions {
@@ -28,4 +28,9 @@ export interface LeafDataType {
 export enum Mode{
   EDIT = "Edit",
   MODIFY = "Modify"
+}
+
+export enum ResponseStatus {
+  success = 200,
+  fail = 500,
 }

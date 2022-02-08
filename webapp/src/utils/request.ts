@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { resolve } from 'path/posix';
 /*
  * @Descripttion: 
@@ -5,10 +6,11 @@ import { resolve } from 'path/posix';
  * @Author: Adxiong
  * @Date: 2022-01-12 17:31:49
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-30 03:08:06
+ * @LastEditTime: 2022-02-08 22:57:50
  */
 import { message } from "antd";
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, Canceler, CancelToken } from "axios";
+import { ResponseStatus } from '../models/reducer/commons';
 const CancelToken = axios.CancelToken
 let cancel: Canceler
 
@@ -47,12 +49,17 @@ class Request {
         if (error && error.response) {
           const {data, status} = error.response;
           message.error({
-            content: `${status}:${data}`,
+            content: `${status}:数据异常`,
             duration: 1,
             top: 10
           })
           return Promise.reject(error)
         } else {
+          message.error({
+            content: `网络异常`,
+            duration: 1,
+            top: 10
+          })
           return Promise.reject(error)
         }
       })    
