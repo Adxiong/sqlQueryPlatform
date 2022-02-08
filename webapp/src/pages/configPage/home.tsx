@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-16 18:31:37
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 01:45:12
+ * @LastEditTime: 2022-02-08 16:50:28
  */
 import React, { useEffect, useState } from "react";
 import Card from "../../components/card/card"
@@ -32,7 +32,7 @@ const Home: React.FC<Props> = (props) => {
     ConfigServices.query((res: ConfigInstance[]) => {      
       // setData(res)      
       dispatch({
-        type: "setDatabaseList",
+        type: "setConfigList",
         payload: res
       })
     })
@@ -54,7 +54,7 @@ const Home: React.FC<Props> = (props) => {
   const onClickDelete = (id: string) => {
     ConfigServices.deleteConfig(id, (res) => {
       dispatch({
-        type: "deleteDatabase",
+        type: "deleteConfig",
         payload: id,
       })
       message.success({
@@ -68,6 +68,7 @@ const Home: React.FC<Props> = (props) => {
     navigate(`/home/details?id=${id}`)
   }
   const onToggleCreateStatus = (status: boolean) => {
+    setMode(Mode.EDIT)
     setShowCreateDatabase(status)
   }
 

@@ -5,7 +5,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-26 20:27:22
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 00:03:41
+ * @LastEditTime: 2022-02-08 16:30:05
  */
 
 import { Actions } from "./commons"
@@ -39,17 +39,26 @@ const State: ConfigStateType= {
 
 export default (state=State, actions: Actions) => {  
   switch(actions.type) {
-    case "setDatabaseList":
+    case "setConfigList":
       return {
         ...state,
         configList: actions.payload
       } 
-    case "deleteDatabase":
+    case "updateConfig":
+      state.configList.map( (item,index) =>  {
+        if (item.id == actions.payload.id) {
+          state.configList[index] = actions.payload
+        }
+      })
+      return {
+        ...state
+      }
+    case "deleteConfig":
       state.configList = state.configList.filter(item => item.id != actions.payload)
       return {
         ...state
       }
-    case "addDatabase":
+    case "addConfig":
       state.configList.push(actions.payload)
       return {
         ...state

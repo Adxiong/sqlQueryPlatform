@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 14:38:12
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 00:15:41
+ * @LastEditTime: 2022-02-08 14:50:13
  */
 import { CreateConfigParams, ConfigInstance } from '../models/reducer/config'
 import request from '../utils/request'
@@ -25,6 +25,12 @@ class ConfigService {
     if (callback){ callback(res)}
   }
 
+  async updateConfig(data: ConfigInstance, callback?: (res: any) => void) {
+    const res: ConfigInstance = await request.post(api.config.updateConfig, {
+      data
+    })
+    if (callback) {callback(res)}
+  }
   async deleteConfig(id: string, callback?: (res: any) => void) {
     const res = await request.delete(api.config.deleteConfig, id)
     if (callback){ callback(res) }

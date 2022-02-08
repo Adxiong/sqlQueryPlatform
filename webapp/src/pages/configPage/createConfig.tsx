@@ -4,10 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-01-24 13:05:46
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-08 01:38:51
+ * @LastEditTime: 2022-02-08 16:49:46
  */
 
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, Input, message, Modal, Select } from "antd";
 import { FormInstance, useForm } from "antd/lib/form/Form";
 import React, { createRef, FC, RefObject, useRef, useState } from "react";
 import styles from "./style/createDatabase.module.less"
@@ -16,6 +16,7 @@ import ConfigServices from "../../services/config"
 import { useDispatch } from "react-redux";
 import { log } from "console";
 import { Mode } from "../../models/reducer/commons"
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 interface Props {
   mode: Mode,
   defaultConfig?: ConfigInstance,
@@ -41,28 +42,38 @@ const CreateConfig: FC<Props> = (props) => {
   const onSubmit = () => {
     formRef.current?.validateFields()
     .then( (form)=> {
-      ConfigServices.createConfig(form, (res) => {        
-        dispatch({
-          type: "addDatabase",
-          payload: res.data
-        })
-        props.clickCancel()
-      })
+      switch (props.mode) {
+        case Mode.EDIT:
+          ConfigServices.createConfig(form, (res) => {        
+            dispatch({
+              type: "addConfig",
+              payload: res.data
+            })
+            message.success("创建成功")
+            props.clickCancel()
+          })
+          break
+        case Mode.MODIFY:
+          const data = {
+            id: props.defaultConfig?.id,
+            ...form
+          }
+          ConfigServices.updateConfig(data, (res: {data: ConfigInstance}) => {        
+            dispatch({
+              type: "updateConfig",
+              payload: data
+            })
+            message.success("修改成功")
+            props.clickCancel()
+          })
+          break
+        default: 
+          message.error("未知错误")
+      }
     })
     .catch((err) => {
-      console.error('表单验证失败', err)
+      message.error('表单验证失败', err)
     }) 
-  }
-
-  const onTestConnect = () => {
-    formRef.current?.validateFields()
-    .then( (form)=> {
-      console.log(form);
-
-    })
-    .catch((err) => {
-      console.error('表单验证失败', err)
-    })
   }
 
   const onChangeForm = (changedValues: any, values: any) => {
@@ -77,8 +88,7 @@ const CreateConfig: FC<Props> = (props) => {
         onCancel={clickCancel}
         footer={
           <div>
-            <Button onClick={onTestConnect} type="primary">测试连接</Button>
-            <Button onClick={onSubmit} type="primary">创建连接</Button>
+            <Button onClick={onSubmit} type="primary">{props.mode == Mode.EDIT ? "创建连接" : "修改"}</Button>
             <Button onClick={clickCancel}>取消</Button>
           </div>
         }
@@ -152,7 +162,9 @@ const CreateConfig: FC<Props> = (props) => {
               {required: true, message: "请输入密码！"}
             ]}
             >
-            <Input type="password" allowClear />
+            <Input.Password 
+              allowClear 
+              iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}/>
           </Form.Item>
         </Form>
       </Modal>
