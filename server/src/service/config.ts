@@ -13,12 +13,14 @@ import ConfigDao from "../dao/config";
 class ConfigService {
   async queryConfigList(): Promise<ConfigInstance[]> {
     return await ConfigDao.queryConfigList()
-    
   }
 
   async createConfig(data: CreateConfigParams): Promise<ConfigInstance> {
     return await ConfigDao.createConfig(data)
-    
+  }
+
+  async updateConfig(data: ConfigInstance): Promise<void> {
+    return await ConfigDao.updateConfig(data)
   }
 
   async deleteConfig(id: string): Promise<void> {

@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:19:33
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-02-06 17:17:27
+ * @LastEditTime: 2022-02-08 16:46:53
  */
 import { CreateConfigParams, ConfigInstance } from './../types/config';
 import { Router, Response, Request, NextFunction } from 'express';
@@ -27,6 +27,18 @@ router.post('/createConfig', (req: Request, res: Response, next: NextFunction) =
   .then( (data: ConfigInstance) => {
     res.json(new ApiResult(ResponseStatus.success, data,"创建成功"))
   })
+  .catch(next)
+})
+
+router.post('/updateConfig', (req: Request, res: Response, next: NextFunction) => {
+  if (!req.body.data.id) {
+    res.json(new ApiResult(ResponseStatus.fail, "", "id不能为空"))
+    return
+  }
+  ConfigService.updateConfig(req.body.data as ConfigInstance)
+  .then( () => {
+    res.json(new ApiResult(ResponseStatus.success, {"message": 'ok'}, "更新成功"))
+  } )
   .catch(next)
 })
 

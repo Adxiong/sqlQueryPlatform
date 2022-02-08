@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-01-28 23:22:14
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-01-29 13:46:31
+ * @LastEditTime: 2022-02-08 16:45:01
  */
 import { ConfigInstance, CreateConfigParams } from "../types/config";
 import fsutils from "../utils/fsutils";
@@ -52,7 +52,25 @@ class ConfigDao {
         logger.info(e)
         throw(e)
       }
-    
+  }
+
+  async updateConfig( data: ConfigInstance): Promise<void> {
+    try {
+      const readRes = await fsutils.ReadFile(config.databaseFilePath)
+      let jsonRes = []
+      if (readRes!="") {
+        jsonRes = JSON.parse(readRes)
+      }
+      jsonRes.map( (item, index) => {
+        if( item.id == data.id) {
+          jsonRes[index] = data
+        } 
+      })
+      await fsutils.WriteFile(config.databaseFilePath, jsBeautify(JSON.stringify(jsonRes)))    
+    } catch (e) {
+      logger.info(e)
+      throw(e)
+    }
   }
 
   async deleteConfig (id: string): Promise<void> {
